@@ -190,9 +190,24 @@ dat <- rbind.fill(dat,
 # Falsi positivi
 dat$condannato[dat$link == "/wiki/Enrico_Rossi"] <- FALSE
 
-write.table(dat[dat$to_year > 1994 & dat$condannato == TRUE,c("link","condannato_frasi")], 
-            file = "descrizione_condanna.txt", sep = "\t",
-            row.names = FALSE)
+require(knitr)
+require(kableExtra)
+
+print_dat <- 
+  dat[!is.na(dat$condannato_frasi) & 
+        dat$to_year > 1994 & 
+        dat$condannato == TRUE,
+      c("link","condannato_frasi")]
+print_dat <- print_dat[complete.cases(print_dat),]
+print_dat <- print_dat[print_dat$condannato_frasi != "",]
+names(print_dat) <- c("link Wikipedia", "Testo Wikipedia")
+print_dat$`link Wikipedia` <- 
+  paste0("https://it.wikipedia.org/", print_dat$`link Wikipedia`)
+
+kable(print_dat, 
+      "html", row.names = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  cat(., file = "descrizione_condanna.html")
 
 # Get Sentence
 for (i in 1:nrow(dat)) {
@@ -209,7 +224,7 @@ for (regione in regioni$name) {
     rbind(new_long_dat, 
           data.frame(regione,
                      year = 1994:2018,
-                      stringsAsFactors = F))
+                     stringsAsFactors = F))
 }
 
 long_dat$condannato <- NA
@@ -232,12 +247,11 @@ ggplot(long_dat, aes(y = regione, x = year, fill = condannato)) +
   geom_tile(colour = 'gray') + 
   coord_equal() +
   theme_light() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        legend.position = 'bottom') +
-  labs(x = NULL, y = NULL) +
-  scale_fill_brewer(palette = "Set2", labels = c("Si", "No", "Nessuna informazione")) +
-  guides(fill=guide_legend(title="Presidente di regione successivamente condannato"))
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  labs(title = "Regioni guidate da un presidente con almeno una condanna", x = NULL, y = NULL, caption = "@FrBailo | Source: Wikipedia.it | Repo: https://git.io/fhFoy") +
+  scale_fill_brewer(palette = "Set2", labels = c("No", "Si", "Nessuna informazione")) +
+  guides(fill=guide_legend(title="Presidente condannato"))
 
-  
+
 
 
