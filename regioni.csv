@@ -1,0 +1,21 @@
+﻿cod,name,regex
+1,Piemonte,Piemonte
+2,Valle d'Aosta,(Valle d'Aosta|Val d'Aosta|Vallée d'Aoste|Val d'Aoste)
+3,Lombardia,Lombardia
+4,Trentino-Alto Adige,(Trentino((-| )Alto Adige)?|(Trentino(-| ))?S(ü|u)dtirol)
+5,Veneto,Veneto
+6,Friuli-Venezia Giulia,Friuli((-| )Venezia Giulia)?
+7,Liguria,Liguria
+8,Emilia Romagna,Emilia(-| )Romagna
+9,Toscana,Toscana
+10,Umbria,Umbria
+11,Marche,Marche
+12,Lazio,Lazio
+13,Abruzzi,(Abruzzi|Abruzzo)
+14,Molise,Molise
+15,Campania,Campania
+16,Puglia,Puglia
+17,Basilicata,Basilicata
+18,Calabria,Calabria
+19,Sicilia,Sicilia
+20,Sardegna,Sardegna
